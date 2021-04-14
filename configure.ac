@@ -10,7 +10,7 @@ AM_INIT_AUTOMAKE
 LT_PREREQ([2.2.])
 LT_INIT([dlopen])
 
-AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_SRCDIR([src/c-strings.c])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
@@ -28,7 +28,6 @@ AC_SEARCH_LIBS([dlopen])
 
 AC_CONFIG_FILES([
   Makefile 
-  src/Makefile
-  test/Makefile])
+  src/Makefile])
 
 AC_OUTPUT
