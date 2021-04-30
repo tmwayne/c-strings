@@ -19,6 +19,7 @@ extern ssize_t  get_line(char *s, size_t n, FILE *fd);
 extern char    *get_tok_r(char *str, const char delim, char **saveptr);
 
 extern int      strmatch(const char *str, const char *target);
+extern int      strcasematch(const char *str, const char *target);
 extern char    *strtrim(char *str);
 extern void     strlower(char *);
 extern int      extmatch(const char *path, const char *ext);

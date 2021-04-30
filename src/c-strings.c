@@ -85,6 +85,13 @@ int strmatch(const char *str, const char *target) {
 
 }
 
+int strcasematch(const char *str, const char *target) {
+
+  if (strcasecmp(str, target)) return 0;
+  else return 1; // return 1 if match
+
+}
+
 int extmatch(const char *path, const char *ext) {
 
   // assert(path && ext);
