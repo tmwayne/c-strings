@@ -1,4 +1,4 @@
 lib_LTLIBRARIES = libcstrings.la
-libcstrings_la_SOURCES = c-strings.c
+libcstrings_la_SOURCES = cstrings.c
 
-include_HEADERS = c-strings.h
+include_HEADERS = cstrings.h

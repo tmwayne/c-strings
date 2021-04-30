@@ -10,7 +10,7 @@ AM_INIT_AUTOMAKE
 LT_PREREQ([2.2.])
 LT_INIT([dlopen])
 
-AC_CONFIG_SRCDIR([src/c-strings.c])
+AC_CONFIG_SRCDIR([src/cstrings.c])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
