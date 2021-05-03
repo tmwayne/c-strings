@@ -9,13 +9,21 @@
 //
 
 
-#ifndef STRING_INCLUDED
-#define STRING_INCLUDED
+#ifndef CSTRING_INCLUDED
+#define CSTRING_INCLUDED
 
 #include <stdio.h>  // FILE
-#include <stddef.h> // ssize_t
+// #include <stddef.h> // ssize_t
 
-extern ssize_t  get_line(char *s, size_t n, FILE *fd);
+enum cstring_error {
+  E_OK = 0,
+  E_NO_INPUT = -1,
+  E_OVERFLOW = -2,
+  E_SMALL_BUF = 3,
+};
+
+// extern ssize_t  get_line(char *s, size_t n, FILE *fd);
+extern int      get_line(char *prompt, char *buf, size_t n, FILE *fd);
 extern char    *get_tok_r(char *str, const char delim, char **saveptr);
 
 extern int      strmatch(const char *str, const char *target);

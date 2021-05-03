@@ -6,32 +6,75 @@
 // Tyler Wayne © 2021
 //
 
-#include <stdio.h>    // fgetc
+#include <stdio.h>    // fgetc, fflush, fgets, printf, getchar
 #include <stdlib.h>   // calloc
 #include <limits.h>   // PATH_MAX
 #include <ctype.h>    // isspace, tolower
 #include <stdbool.h>  // bool, true, false
 #include <string.h>   // strlen
 
+#include "cstrings.h"  // cstring_error
+
 // get_line is similar to getline in string.h
 // except that it doesn't include the newline
 // character in the returned string
-ssize_t get_line(char *s, size_t n, FILE *fd) {
+// ssize_t get_line2(char *s, size_t n, FILE *fd) {
+// 
+//   if (s == NULL || n == 0 || fd == NULL) return -1;
+// 
+//   ssize_t len = 0;
+//   char c;
+// 
+//   while ((c = (char) fgetc(fd)) != EOF) {
+//     if (c == '\n') break;       // ignore new-line
+//     if (len == n - 1) continue; // ignore the rest of the line once buf is full
+//     else  s[len] = c;
+//     len++;
+//   }
+//   s[len] = '\0';                // ensure line is null-terminated
+// 
+//   return len;
+// 
+// }
 
-  if (s == NULL || n == 0 || fd == NULL) return -1;
+int get_line(char *prompt, char *buf, size_t n, FILE *fd) {
 
-  ssize_t len = 0;
-  char c;
+  int c, extra;
 
-  while ((c = (char) fgetc(fd)) != EOF) {
-    if (c == '\n') break;       // ignore new-line
-    if (len == n - 1) continue; // ignore the rest of the line once buf is full
-    else  s[len] = c;
-    len++;
+  // Size zero or one cannot store enough, so don't even try
+  // we need space for at least a newline and null-terminator
+  if (n < 2) return E_SMALL_BUF;
+
+  // Use stdin for NULL file descriptor
+  if (!fd) fd = stdin;
+
+  // Clear prompt if reading from stdin
+  if (fd != stdin) prompt = NULL;
+
+  // Output prompt
+  if (prompt) {
+    printf("%s", prompt);
+    fflush(stdout);
   }
-  s[len] = '\0';                // ensure line is null-terminated
 
-  return len;
+  // Get line with buffer overrun protection
+  if (!fgets(buf, n, fd)) return E_NO_INPUT;
+
+  // Catch possibility of \0 in the input stream
+  size_t len = strlen(buf);
+  if (len < 1) return E_NO_INPUT;
+
+  // If it was too long, there'll be no newline. In that case,
+  // flush to end of line so that excess doesn't affect the next call
+  if (buf[len-1] != '\n') {
+    extra = 0;
+    while (((c = getchar()) != '\n') && (c != EOF)) extra = 1;
+    return (extra == 1) ? E_OVERFLOW : E_OK;
+  }
+
+  // Otherwise remove newline and give string back to caller
+  buf[len - 1] = '\0';
+  return E_OK;
 
 }
 
