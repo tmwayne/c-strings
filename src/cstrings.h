@@ -13,7 +13,6 @@
 #define CSTRING_INCLUDED
 
 #include <stdio.h>  // FILE
-// #include <stddef.h> // ssize_t
 
 enum cstring_error {
   E_OK = 0,
@@ -22,7 +21,6 @@ enum cstring_error {
   E_SMALL_BUF = 3,
 };
 
-// extern ssize_t  get_line(char *s, size_t n, FILE *fd);
 extern int      get_line(char *prompt, char *buf, size_t n, FILE *fd);
 extern char    *get_tok_r(char *str, const char delim, char **saveptr);
 

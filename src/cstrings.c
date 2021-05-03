@@ -15,28 +15,6 @@
 
 #include "cstrings.h"  // cstring_error
 
-// get_line is similar to getline in string.h
-// except that it doesn't include the newline
-// character in the returned string
-// ssize_t get_line2(char *s, size_t n, FILE *fd) {
-// 
-//   if (s == NULL || n == 0 || fd == NULL) return -1;
-// 
-//   ssize_t len = 0;
-//   char c;
-// 
-//   while ((c = (char) fgetc(fd)) != EOF) {
-//     if (c == '\n') break;       // ignore new-line
-//     if (len == n - 1) continue; // ignore the rest of the line once buf is full
-//     else  s[len] = c;
-//     len++;
-//   }
-//   s[len] = '\0';                // ensure line is null-terminated
-// 
-//   return len;
-// 
-// }
-
 int get_line(char *prompt, char *buf, size_t n, FILE *fd) {
 
   int c, extra;
@@ -48,11 +26,8 @@ int get_line(char *prompt, char *buf, size_t n, FILE *fd) {
   // Use stdin for NULL file descriptor
   if (!fd) fd = stdin;
 
-  // Clear prompt if reading from stdin
-  if (fd != stdin) prompt = NULL;
-
   // Output prompt
-  if (prompt) {
+  if (fd == stdin && prompt) {
     printf("%s", prompt);
     fflush(stdout);
   }
