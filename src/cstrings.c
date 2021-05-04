@@ -74,7 +74,7 @@ char *get_tok_r(char *str, const char delim, char **saveptr) {
         field[i] = '\0';
         *saveptr += i;
         return field;
-      case '"': case '\'':
+      case '"':
         in_quote = in_quote ? false : true;
         break;
       default:
